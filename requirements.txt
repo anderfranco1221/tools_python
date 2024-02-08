@@ -7,6 +7,6 @@ openpyxl
 python-jose[cryptography]
 python-multipart==0.0.5
 aiofiles
-cv2
+opencv-python
 matplotlib
 pytesseract 

@@ -2,9 +2,9 @@ version: '1'
 
 services:
   api:
-    image: tools_python:0.0.1
+    image: ander1221/tools_python:0.0.1
     volumes:
-      - . .
+      - ./ code/
     ports:
       - 8080:80
     

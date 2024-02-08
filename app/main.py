@@ -1,4 +1,4 @@
-import uvicorn
+
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import  FastAPI, Request, BackgroundTasks, UploadFile, File, HTTPException #, Depends,  Response, status
 from fastapi.responses import FileResponse #JSONResponse, PlainTextResponse, StreamingResponse
@@ -38,11 +38,11 @@ def test():
 
 
 @app.post("/api/excel/jsonToXml")
-async def convertirJsontoExcel(file: UploadFile = File(...), filename: str = None, task: BackgroundTasks):
+async def convertirJsontoExcel(file: UploadFile = File(...), filename: str = None):
     try:
         path = ControllerExcel.convertirJsonExcel(filename, file)
         
-        task.add_task(tools.eliminarDespues, 15, path)
+        #task.add_task(tools.eliminarDespues, 15, path)
         
         return FileResponse(path)
     except Exception as e:
@@ -56,5 +56,5 @@ async def convertirImagenText(filename, file : UploadFile = File(...)):
         raise HTTPException(status_code=404, detail={"Error":"No se pudo procesar la imagen"})
     
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+#if __name__ == "__main__":
+    #uvicorn.run(app, host="0.0.0.0", port=80)
