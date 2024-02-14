@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import  FastAPI, Request, BackgroundTasks, UploadFile, File, HTTPException #, Depends,  Response, status
 from fastapi.responses import FileResponse #JSONResponse, PlainTextResponse, StreamingResponse
 #from app.config import settings
-from app.controllers import ControllerExcel
+from app.controllers import ControllerExcel, ControllerImage
 from app.helpers import tools
 
 # from typing import Annotated
@@ -49,12 +49,11 @@ async def convertirJsontoExcel(file: UploadFile = File(...), filename: str = Non
         raise HTTPException(status_code=404, detail={"error": f"No se pudo generar el archivo. Detalle del error: {str(e)}"})
     
 @app.post("/api/image/imageToText")
-async def convertirImagenText(filename, file : UploadFile = File(...)):
+async def convertirImagenText(file : UploadFile = File(...)):
     try:
-        return #
-    except Exception:
-        raise HTTPException(status_code=404, detail={"Error":"No se pudo procesar la imagen"})
-    
+        return ControllerImage.getTextImage(file)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail={"Error": f"No se pudo procesar la imagen: : {str(e)}"})
 
 #if __name__ == "__main__":
     #uvicorn.run(app, host="0.0.0.0", port=80)

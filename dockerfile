@@ -7,6 +7,8 @@ WORKDIR /app
 # 
 COPY . .
 
+RUN sudo apt install tesseract-ocr
+
 # 
 RUN pip install -r requirements.txt
 
