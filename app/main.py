@@ -34,6 +34,7 @@ url = "/api/";
 
 @app.get("/api/test")
 def test():
+    tools.create_directory()
     return {"Hello": "World"}
 
 
@@ -51,7 +52,9 @@ async def convertirJsontoExcel(file: UploadFile = File(...), filename: str = Non
 @app.post("/api/image/imageToText")
 async def convertirImagenText(file : UploadFile = File(...)):
     try:
-        return ControllerImage.getTextImage(file)
+        data = ControllerImage.getTextImage(file)
+        tools.destroy_directory()
+        return data
     except Exception as e:
         raise HTTPException(status_code=404, detail={"Error": f"No se pudo procesar la imagen: : {str(e)}"})
 

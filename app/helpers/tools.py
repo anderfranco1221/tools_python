@@ -1,7 +1,10 @@
 import json
 import os
 import time
-import asyncio
+import shutil
+from pathlib import Path
+
+rutaTemp = './temp'
 
 def read_json(file_path: str):
     with file_path as file:
@@ -27,3 +30,11 @@ def eliminarDespues(segundos: int, path: str):
     print(path)
     time.sleep(segundos)
     limpiarArchivo(path)
+    
+    #Crea los directorios
+def create_directory():
+    os.makedirs(rutaTemp)
+
+#Destrulle los directorios
+def destroy_directory():
+    shutil.rmtree(rutaTemp)
