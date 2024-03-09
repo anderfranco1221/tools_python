@@ -58,5 +58,13 @@ async def convertirImagenText(file : UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=404, detail={"Error": f"No se pudo procesar la imagen: : {str(e)}"})
 
+@app.post("/api/image/document")
+async def convertirImagenText(file : UploadFile = File(...)):
+    try:
+        data = ControllerImage.getInfoDocument(file)
+        tools.destroy_directory()
+        return data
+    except Exception as e:
+        raise HTTPException(status_code=404, detail={"Error": f"No se pudo procesar la imagen: : {str(e)}"})
 #if __name__ == "__main__":
     #uvicorn.run(app, host="0.0.0.0", port=80)

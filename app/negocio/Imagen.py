@@ -8,10 +8,10 @@ from fastapi import HTTPException, UploadFile, File
 
 
 def getFechas(pathImage):
-    if  not pathImage.filename:
+    if  not pathImage:
         raise HTTPException(status_code=500, detail=f"Error en la ruta de la imgen")
     
-    invertImage = procesarImage(pathImage)
+    invertImage = procesarImagen(pathImage)
     data_image = ocr(invertImage)
     
     data = re.findall('\w{2}-\w{3}-\w{4}', data_image)
@@ -38,7 +38,7 @@ def getText(pathImage):
     
     pathImage = boxText(data_image, img_color)
     
-    return {'data' : data_image['text'], 'path' : pathImage}
+    return {'data' : pytesseract.image_to_string(invertImage), 'path' : pathImage}
 
 def procesarImagen(pathImage):
     #Obtiene la imagen

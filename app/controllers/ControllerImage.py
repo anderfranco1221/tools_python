@@ -27,3 +27,18 @@ def getTextImage(image : UploadFile = File(...)):
     image_64_encode = base64.b64encode(image_read)
     
     return {'datos' : datos['data'], 'imagen' : image_64_encode}
+
+def getInfoDocument(image : UploadFile = File(...)):
+
+    if not os.path.exists('./temp'):
+        tools.create_directory()
+    
+    if not tools.validate_extension(image.filename, ['.jpg', '.png']):
+        raise HTTPException(status_code=404, detail= {"error" : "El formato del archivo no es valido"});
+
+    temp_file_path = f"temp/{image.filename}"
+    
+    with open(temp_file_path, "wb") as temp_file:
+        temp_file.write(image.file.read())
+
+    return Imagen.getFechas(temp_file_path)
